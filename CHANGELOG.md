@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - feat(bridge): add Solana assets to bridge token pickers ([#14365](https://github.com/MetaMask/metamask-mobile/pull/14365))
+- chore(js-ts): Convert app/components/UI/Swaps/index.js to TypeScript ([#4](https://github.com/cognition-workshop/metamask-mobile/pull/4))
 
 ## [7.43.0]
 
