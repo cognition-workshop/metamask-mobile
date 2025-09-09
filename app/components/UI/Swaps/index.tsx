@@ -26,8 +26,7 @@ import {
   safeNumberToBN,
 } from '../../../util/number';
 import { safeToChecksumAddress } from '../../../util/address';
-// @ts-expect-error
-import { swapsUtils } from '../../../util/swaps';
+import { swapsUtils } from '@metamask/swaps-controller';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 
 import {
@@ -293,8 +292,8 @@ function SwapsAmountView({
           AppConstants.SWAPS.CLIENT_ID,
         );
 
-        const liveness = getSwapsLiveness(featureFlags, chainId as `0x${string}`);
-        setLiveness(chainId, featureFlags);
+        const liveness = getSwapsLiveness(featureFlags!, chainId as `0x${string}`);
+        setLiveness(chainId, featureFlags!);
 
         if (liveness) {
           // Triggered when a user enters the MetaMask Swap feature
@@ -615,9 +614,9 @@ function SwapsAmountView({
   const setSlippageAfterTokenPress = useCallback(
     (sourceTokenAddress: string | undefined, destinationTokenAddress: string | undefined) => {
       const enableDirectWrapping = swapsUtils.shouldEnableDirectWrapping(
-        chainId,
-        sourceTokenAddress,
-        destinationTokenAddress,
+        chainId as `0x${string}`,
+        sourceTokenAddress || '',
+        destinationTokenAddress || '',
       );
       if (enableDirectWrapping && !isDirectWrapping) {
         setSlippage(0);
@@ -815,13 +814,13 @@ function SwapsAmountView({
             title={strings('swaps.convert_to')}
             tokens={swapsTokens}
             initialTokens={[
-              swapsUtils.getNativeSwapsToken(chainId),
+              swapsUtils.getNativeSwapsToken(chainId as `0x${string}`),
               ...tokensTopAssets
                 .slice(0, MAX_TOP_ASSETS)
                 .filter(
                   (asset) =>
                     asset.address !==
-                    swapsUtils.getNativeSwapsToken(chainId).address,
+                    swapsUtils.getNativeSwapsToken(chainId as `0x${string}`).address,
                 ),
             ]}
             onItemPress={handleDestinationTokenPress}
